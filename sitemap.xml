@@ -17,6 +17,18 @@
   </url>
   
   <url>
+    <loc>https://mattwei.github.io/categories/android/</loc>
+    <lastmod>2017-02-07T09:51:41+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mattwei.github.io/categories/c&#43;&#43;/</loc>
+    <lastmod>2017-02-08T20:21:41+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://mattwei.github.io/categories/</loc>
     <priority>0</priority>
   </url>
@@ -34,8 +46,13 @@
   </url>
   
   <url>
-    <loc>https://mattwei.github.io/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2017-02-07T09:51:41+08:00</lastmod>
+    <loc>https://mattwei.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mattwei.github.io/tags/test/</loc>
+    <lastmod>2017-02-08T20:21:41+08:00</lastmod>
     <priority>0</priority>
   </url>
   
