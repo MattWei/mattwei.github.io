@@ -1,9 +1,7 @@
 theme: jekyll-theme-architect
 
-webrick:
-  headers:
-    My-Header: MJ's thinking
-    My-Other-Header: MJ's thinking2
+title: MJ's thinking
+description: 一个码农的胡言乱语.
 
 exclude_paths:
   - .codeclimate.yml
