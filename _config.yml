@@ -1,28 +1,31 @@
-theme: jekyll-theme-minima
+permalink: /:year/:month/:day/:title.html
+paginate: 10
 
+# 作者信息
+author:
+  name: Minji Wei
+  email: weiminji@gmail.com
+  github: http://github.com/mattwei
+
+# 站点信息
 title: MJ's thinking
-description: 一个码农的胡言乱语.
+description: 一个码农的胡思
 
-exclude_paths:
-  - .codeclimate.yml
-  - .gitignore
-  - .rspec
-  - .rubocop.yml
-  - .travis.yml
+# gavatar头像及Favicon
+gavatar: /public/img/deer3.png
+favicon: /public/img/deer3.png
 
-  - Gemfile.lock
-  - CHANGELOG.{md,markdown,txt,textile}
-  - CONTRIBUTING.{md,markdown,txt,textile}
-  - readme.{md,markdown,txt,textile}
-  - README.{md,markdown,txt,textile}
-  - Readme.{md,markdown,txt,textile}
-  - ReadMe.{md,markdown,txt,textile}
-  - COPYING
-  - LICENSE
+# 主题设置，自动激活某个标签
+active: 读书
 
-  - features/**/*
-  - script/**/*
-  - docs/**/*
-  - spec/**/*
-  - test/**/*
-  - vendor/**/*
+# 首页除了最新文章外显示分类
+cates:
+  - Optimization
+  - LaTeX
+
+# 中文本地化
+locals:
+  tags: 标签
+  about: 关于
+  newest: 最新文章
+  archive: 归档
