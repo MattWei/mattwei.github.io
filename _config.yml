@@ -26,7 +26,7 @@ favicon: /public/img/deer3.png
 #  shortname: painterlin
 
 # 主题设置，自动激活某个标签
-active: C&C++
+active: Android
 
 # 首页除了最新文章外显示分类
 cates:
