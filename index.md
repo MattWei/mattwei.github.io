@@ -21,16 +21,25 @@ Syntax highlighted code block
 1. Numbered
 2. List
 
-  {% for post in site.posts %}
-    [{{ post.title }}]({{ post.url }})
-  {% endfor %}
-
-  [91ccef65]: ddd "ddd"
-
 **Bold** and _Italic_ and `Code` text
 
 [Link](url) and ![Image](src)
 ```
+
+### list 1
+{% for post in site.posts %}
+  [{{ post.title }}]({{ post.url }})
+{% endfor %}
+
+
+### list2
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
