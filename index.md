@@ -21,6 +21,14 @@ Syntax highlighted code block
 1. Numbered
 2. List
 
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
 **Bold** and _Italic_ and `Code` text
 
 [Link](url) and ![Image](src)
