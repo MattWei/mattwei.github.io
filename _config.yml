@@ -1,5 +1,10 @@
 theme: jekyll-theme-architect
 
+webrick:
+  headers:
+    My-Header: MJ's thinking
+    My-Other-Header: MJ's thinking2
+
 exclude_paths:
   - .codeclimate.yml
   - .gitignore
