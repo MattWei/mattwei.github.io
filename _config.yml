@@ -10,7 +10,7 @@ url:
 # Owner/author information
 owner:
   name:          Matt wei
-  avatar:         avatar.jpg
+  avatar:         2013-10-04_150549.png
   bio:            "逝者如斯乎,不舍昼夜!"
   email:          weiminji@gmail.com
   # Social networking links used in footer. Update and remove as you like.
@@ -62,7 +62,7 @@ defaults:
     values:
       layout: "post"
       image:
-          feature: joy-stamp-212792-1.png
+          feature: 2013-09-20_170503_2.png
 
 kramdown:
   input: GFM
