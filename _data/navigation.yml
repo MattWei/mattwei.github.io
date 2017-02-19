@@ -1,7 +1,16 @@
 # Menu navigation links
 
-- title: Theme Setup
-  url: /theme-setup/
+#- title: Theme Setup
+#  url: /theme-setup/
 
-- title: External Link
-  url: http://mademistakes.com
+#- title: External Link
+#  url: http://mademistakes.com
+
+- title: Android
+  url: /android/
+
+- title: 编程语言
+  url: /编程语言/
+
+- title: 工具
+  url: /工具/

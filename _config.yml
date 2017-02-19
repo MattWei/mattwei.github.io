@@ -1,6 +1,6 @@
-title:            Site Title
-description:      Describe your website here.
-disqus_shortname: 
+title:            MJ's thinking
+description:      一个码农的烂笔头
+disqus_shortname:
 reading_time:     true
 words_per_minute: 200
 # Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
@@ -9,34 +9,34 @@ url:
 
 # Owner/author information
 owner:
-  name:           Your Name
+  name:          Matt wei
   avatar:         avatar.jpg
-  bio:            "Your bio goes here. It shouldn't be super long but a good sentence or two should suffice."
-  email:          you@email.com
+  bio:            "逝者如斯乎,不舍昼夜!"
+  email:          weiminji@gmail.com
   # Social networking links used in footer. Update and remove as you like.
-  twitter:        
-  facebook:       
-  github:         
-  stackexchange:  
-  linkedin:       
-  instagram:      
-  flickr:         
-  tumblr:         
+  #twitter:
+  #facebook:
+  #github:
+  #stackexchange:
+  #linkedin:
+  #instagram:
+  #flickr:
+  #tumblr:
   # google plus id, include the '+', eg +mmistakes
-  google_plus:
+  #google_plus: +weiminji
 
 # Background image to be tiled on all pages
-background: 
+background:
 
 # Analytics and webmaster tools stuff goes here
-google_analytics:   
-google_verify:      
+google_analytics:
+google_verify:
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:         
+bing_verify:
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    America/New_York
-future:      false  # publish future dated posts --  true, false (default) 
+timezone:     Asia/Shanghai
+future:      false  # publish future dated posts --  true, false (default)
 highlighter: rouge
 markdown:    kramdown
 gems:
@@ -54,6 +54,16 @@ permalink:   /:categories/:title/
 # Amount of post to show on home page
 paginate: 5
 
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "posts" # previously `post` in Jekyll 2.2.
+    values:
+      layout: "post"
+      image:
+          feature: joy-stamp-212792-1.png
+
 kramdown:
   input: GFM
   auto_ids: true
@@ -62,9 +72,9 @@ kramdown:
   toc_levels: 1..6
   enable_coderay: false
 
-include: 
+include:
   - .htaccess
-exclude: 
+exclude:
   - "*.less"
   - "*.sublime-project"
   - "*.sublime-workspace"
