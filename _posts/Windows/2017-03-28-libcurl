@@ -1,0 +1,28 @@
+---
+layout: post
+title: nmake
+date: '2017-03-28 16:48'
+category: windows
+tags: libcurl, 编程
+---
+
+curl连接时如果报以下错误，需要添加Ws2_32.lib和Wldap32.lib。
+
+```
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_init referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_unbind_s referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_set_option referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_simple_bind_s referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_search_s referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_msgfree referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_err2string referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_first_entry referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_next_entry referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_first_attribute referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_next_attribute referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_get_values_len referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_value_free_len referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_get_dn referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_memfree referenced in function __ldap_free_urldesc 
+1>libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ber_free referenced in function __ldap_free_urldesc
+```
