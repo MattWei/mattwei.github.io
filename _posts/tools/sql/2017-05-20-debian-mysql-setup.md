@@ -11,7 +11,7 @@ category: 工具
 The reason is that recent Ubuntu installation (maybe others also), mysql is using by default the UNIX auth_socket plugin.
 
 Basically means that: db_users using it, will be "auth" by the system user credentias. You can see if your root user is set up like this by doing the following:
-
+```
 $ sudo mysql -u root # I had to use "sudo" since is new installation
 
 mysql> USE mysql;
@@ -24,13 +24,15 @@ mysql> SELECT User, Host, plugin FROM mysql.user;
 | mysql.sys        | mysql_native_password |
 | debian-sys-maint | mysql_native_password |
 +------------------+-----------------------+
+```
 As you can see in the query, the root user is using the auth_socket plugin
 
 There are 2 ways to solve this:
+1. You can set the root user to use the mysql_native_password plugin
+2. You can create a new db_user with you system_user (recommended)
 
-You can set the root user to use the mysql_native_password plugin
-You can create a new db_user with you system_user (recommended)
 Option 1:
+
 ```
 $ sudo mysql -u root # I had to use "sudo" since is new installation
 
@@ -41,7 +43,9 @@ mysql> exit;
 
 $ service mysql restart
 ```
+
 Option 2: (replace YOUR_SYSTEM_USER with the username you have)
+
 ```
 $ sudo mysql -u root # I had to use "sudo" since is new installation
 
