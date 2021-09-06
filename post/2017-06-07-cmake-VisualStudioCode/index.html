@@ -2,24 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Gridea | Minji&#39;s thinkings</title>
+<title>Visual Studio Code cmake | Minji&#39;s thinkings</title>
 <link rel="shortcut icon" href="https://mattwei.github.io/favicon.ico?v=1630896309037">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://mattwei.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Gridea | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Visual Studio Code cmake | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
+    <meta name="description" content="CMakelists.txt
+cmake_minimum_required(VERSION 3.7)
 
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+project(ATSUnitTest CXX)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE..." />
+    <meta name="keywords" content="cmake,VisualStudioCode" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,56 +79,81 @@ Gridea 主页
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello Gridea
+              Visual Studio Code cmake
             </h2>
             <div class="post-info">
               <span>
-                2018-12-12
+                2021-09-06
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
-                <a href="https://mattwei.github.io/tag/fuV5zLhMw/" class="post-tag">
-                  # Gridea
+                <a href="https://mattwei.github.io/tag/m66UfiRaP7/" class="post-tag">
+                  # cmake
+                </a>
+              
+                <a href="https://mattwei.github.io/tag/I8pxm5vIR8/" class="post-tag">
+                  # VisualStudioCode
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://mattwei.github.io/post-images/hello-gridea.png" alt="">
-            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+                <h1 id="cmakeliststxt">CMakelists.txt</h1>
+<pre><code>cmake_minimum_required(VERSION 3.7)
+
+project(ATSUnitTest CXX)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}) 
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\gmock\\include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\winInterface)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\..\\ATS2PA\\src)
+
+LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\gmock)
+
+# MFC
+add_definitions(-D_AFXDLL)
+# 1 为静态链接，2为动态链接
+set(CMAKE_MFC_FLAG 2)
+# force Unicode over Multi-byte
+#if(COMPILER_MSVC)
+add_definitions(-DUNICODE -D_UNICODE)
+set(CMAKE_C_FLAGS_DEBUG &quot;${CMAKE_C_FLAGS_DEBUG} /W3 /MTd&quot;)
+set(CMAKE_CXX_FLAGS_RELEASE &quot;${CMAKE_CXX_FLAGS_RELEASE} /MT&quot;)
+set(CMAKE_CXX_FLAGS_DEBUG &quot;${CMAKE_CXX_FLAGS_DEBUG} /MTd&quot;)
+#endif()
+
+set(LIBNAME &quot;gmock.lib&quot;)
+set(ATS_SRC_DIR &quot;../../../ATS2PA/src/&quot;)
+
+add_definitions(-DCOMPILE_UNIT_TESTS)
+
+add_executable(ATSUnitTest ../../main.cpp
+    taskunittest.cpp
+    ${ATS_SRC_DIR}/ats/ats.cpp
+    ${ATS_SRC_DIR}/ats/task.cpp
+    ${ATS_SRC_DIR}/ats/atspackage.cc
+    ${ATS_SRC_DIR}/utils/crc.cc
+    ${ATS_SRC_DIR}/utils/timer.cpp)
+
+target_link_libraries(ATSUnitTest debug gmock.lib)
+
+</code></pre>
+<h1 id="run-command">Run command</h1>
+<pre><code>mkdir build
+cd build
+cmake ..
+cd ..
+cmake --build build --target ALL_BUILD
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
-</ul>
-</li>
+<li><a href="#cmakeliststxt">CMakelists.txt</a></li>
+<li><a href="#run-command">Run command</a></li>
 </ul>
 
               </div>
@@ -138,6 +161,15 @@ Gridea 主页
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mattwei.github.io/post/2017-05-20-debian-mysql-setup/">
+              <h3 class="post-title">
+                Debian mysql setup
+              </h3>
+            </a>
+          </div>
         
 
         

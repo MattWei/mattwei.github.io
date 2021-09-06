@@ -2,24 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Gridea | Minji&#39;s thinkings</title>
+<title>C++泛型 | Minji&#39;s thinkings</title>
 <link rel="shortcut icon" href="https://mattwei.github.io/favicon.ico?v=1630896309037">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://mattwei.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Gridea | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="C++泛型 | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="泛型方法
+template &lt;typename T&gt;
+int compare(const T &amp;v1, const T &amp;v2)
+{
+   if (v1 &lt; v2) return -1;
+   if (v2..." />
+    <meta name="keywords" content="C++" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,56 +79,76 @@ Gridea 主页
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello Gridea
+              C++泛型
             </h2>
             <div class="post-info">
               <span>
-                2018-12-12
+                2017-02-16
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
-                <a href="https://mattwei.github.io/tag/fuV5zLhMw/" class="post-tag">
-                  # Gridea
+                <a href="https://mattwei.github.io/tag/IZctYlJ5G2/" class="post-tag">
+                  # C++
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://mattwei.github.io/post-images/hello-gridea.png" alt="">
-            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+                <h1 id="泛型方法">泛型方法</h1>
+<pre><code>template &lt;typename T&gt;
+int compare(const T &amp;v1, const T &amp;v2)
+{
+   if (v1 &lt; v2) return -1;
+   if (v2 &lt; v1) return 1;
+   return 0;
+}
+</code></pre>
+<p>a. 模板定义以关键字 template 开始，后接模板形参表，模板形参表是用尖括号括住的一个或多个模板形参的列表，形参之间以逗号分隔。 模板形参表不能为空。</p>
+<p>b. 模板形参表很像函数形参表，函数形参表定义了特定类型的局部变量但并不初始化那些变量，在运行时再提供实参来初始化形参。</p>
+<p>c. 模板形参可以是表示类型的类型形参，也可以是表示常量表达式的非类型形参。非类型形参跟在类型说明符之后声明, 类型形参跟在关键字 class 或 typename 之后定义，例如，class T 是名为 T 的类型形参，在这里 class 和 typename 没有区别。</p>
+<p>使用函数模板时，编译器会推断哪个（或哪些）模板实参绑定到模板形参。一旦编译器确定了实际的模板实参，就称它实例化了函数模板的一个实例。实质上，编译器将确定用什么类型代替每个类型形参，以及用什么值代替每个非类型形参。推导出实际模板实参后，编译器使用实参代替相应的模板形参产生编译该版本的函数。编译器承担了为我们使用的每种类型而编写函数的单调工作。</p>
+<h1 id="泛型类">泛型类</h1>
+<pre><code>template &lt;class T1, class T2 &gt;
+class A {
+private:
+  int a;
+  T1 b; //成员变量也可以用模板参数
+public:
+  int fun1(T1 x, int y );
+  T2 fun2(T1 x, T2 y);
+}
+//类实现部分
+template &lt;class T1, class T2 &gt;
+int A&lt;T1&gt;:: fun1(T1 x, int y )
+{
+  //实现……
+}
+
+template &lt;class T1, class T2 &gt;
+T2 A&lt;T1,T2&gt;:: fun2(T1 x, T2 y)
+{
+  //实现……
+}
+
+//使用类A
+int main( ) {
+//定义对象a,并用int替换T1, float替换T2
+A&lt;int, float&gt; a;
+//实例化a,调用a的属性和方法……
+}
+</code></pre>
+<p>类模板:类模板也是模板，因此必须以关键字 template 开头，后接模板形参表。</p>
+<p>a. 除了模板形参表外，类模板的定义看起来与任意其他类问相似。类模板可以定义数据成员、函数成员和类型成员，也可以使用访问标号控制对成员的访问，还可以定义构造函数和析构函数等等。在类和类成员的定义中，可以使用模板形参作为类型或值的占位符，在使用类时再提供那些类型或值。</p>
+<p>b. 与调用函数模板形成对比，使用类模板时，必须为模板形参显式指定实参.编译器使用实参来实例化这个类的特定类型版本。</p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
-</ul>
-</li>
+<li><a href="#%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95">泛型方法</a></li>
+<li><a href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB">泛型类</a></li>
 </ul>
 
               </div>
