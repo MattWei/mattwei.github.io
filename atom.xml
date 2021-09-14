@@ -1,45 +1,525 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://mattwei.github.io/</id>
-    <title>Minji&apos;thinking</title>
-    <updated>2021-09-14T01:34:37.875Z</updated>
+    <id>https://mattwei.github.io</id>
+    <title>Minji&apos;s thinkings</title>
+    <updated>2021-09-14T01:40:27.669Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://mattwei.github.io/"/>
+    <link rel="alternate" href="https://mattwei.github.io"/>
     <link rel="self" href="https://mattwei.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://mattwei.github.io/images/avatar.png</logo>
     <icon>https://mattwei.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Minji&apos;thinking</rights>
+    <rights>All rights reserved 2021, Minji&apos;s thinkings</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://mattwei.github.io/post/hello-gridea/</id>
-        <link href="https://mattwei.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[Visual Studio Code cmake]]></title>
+        <id>https://mattwei.github.io/post/2017-06-07-cmake-VisualStudioCode/</id>
+        <link href="https://mattwei.github.io/post/2017-06-07-cmake-VisualStudioCode/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+        <updated>2021-09-06T02:38:08.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="cmakeliststxt">CMakelists.txt</h1>
+<pre><code>cmake_minimum_required(VERSION 3.7)
+
+project(ATSUnitTest CXX)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}) 
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\gmock\\include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\winInterface)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\..\\ATS2PA\\src)
+
+LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\gmock)
+
+# MFC
+add_definitions(-D_AFXDLL)
+# 1 为静态链接，2为动态链接
+set(CMAKE_MFC_FLAG 2)
+# force Unicode over Multi-byte
+#if(COMPILER_MSVC)
+add_definitions(-DUNICODE -D_UNICODE)
+set(CMAKE_C_FLAGS_DEBUG &quot;${CMAKE_C_FLAGS_DEBUG} /W3 /MTd&quot;)
+set(CMAKE_CXX_FLAGS_RELEASE &quot;${CMAKE_CXX_FLAGS_RELEASE} /MT&quot;)
+set(CMAKE_CXX_FLAGS_DEBUG &quot;${CMAKE_CXX_FLAGS_DEBUG} /MTd&quot;)
+#endif()
+
+set(LIBNAME &quot;gmock.lib&quot;)
+set(ATS_SRC_DIR &quot;../../../ATS2PA/src/&quot;)
+
+add_definitions(-DCOMPILE_UNIT_TESTS)
+
+add_executable(ATSUnitTest ../../main.cpp
+    taskunittest.cpp
+    ${ATS_SRC_DIR}/ats/ats.cpp
+    ${ATS_SRC_DIR}/ats/task.cpp
+    ${ATS_SRC_DIR}/ats/atspackage.cc
+    ${ATS_SRC_DIR}/utils/crc.cc
+    ${ATS_SRC_DIR}/utils/timer.cpp)
+
+target_link_libraries(ATSUnitTest debug gmock.lib)
+
+</code></pre>
+<h1 id="run-command">Run command</h1>
+<pre><code>mkdir build
+cd build
+cmake ..
+cd ..
+cmake --build build --target ALL_BUILD
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Debian mysql setup]]></title>
+        <id>https://mattwei.github.io/post/2017-05-20-debian-mysql-setup/</id>
+        <link href="https://mattwei.github.io/post/2017-05-20-debian-mysql-setup/">
+        </link>
+        <updated>2021-09-06T02:38:00.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="error-1698-28000-access-denied-for-user-rootlocalhost解决方法">ERROR 1698 (28000): Access denied for user 'root'@'localhost'解决方法</h1>
+<p>The reason is that recent Ubuntu installation (maybe others also), mysql is using by default the UNIX auth_socket plugin.</p>
+<p>Basically means that: db_users using it, will be &quot;auth&quot; by the system user credentias. You can see if your root user is set up like this by doing the following:</p>
+<pre><code>$ sudo mysql -u root # I had to use &quot;sudo&quot; since is new installation
+
+mysql&gt; USE mysql;
+mysql&gt; SELECT User, Host, plugin FROM mysql.user;
+
++------------------+-----------------------+
+| User             | plugin                |
++------------------+-----------------------+
+| root             | unix_socket           |
+| mysql.sys        | mysql_native_password |
+| debian-sys-maint | mysql_native_password |
++------------------+-----------------------+
+</code></pre>
+<p>As you can see in the query, the root user is using the auth_socket plugin</p>
+<p>There are 2 ways to solve this:</p>
+<ol>
+<li>You can set the root user to use the mysql_native_password plugin</li>
+<li>You can create a new db_user with you system_user (recommended)</li>
+</ol>
+<p>Option 1:</p>
+<pre><code>$ sudo mysql -u root # I had to use &quot;sudo&quot; since is new installation
+
+mysql&gt; USE mysql;
+mysql&gt; UPDATE user SET plugin='mysql_native_password' WHERE User='root';
+mysql&gt; FLUSH PRIVILEGES;
+mysql&gt; exit;
+
+$ service mysql restart
+</code></pre>
+<p>Option 2: (replace YOUR_SYSTEM_USER with the username you have)</p>
+<pre><code>$ sudo mysql -u root # I had to use &quot;sudo&quot; since is new installation
+
+mysql&gt; USE mysql;
+mysql&gt; CREATE USER 'YOUR_SYSTEM_USER'@'localhost' IDENTIFIED BY '';
+mysql&gt; GRANT ALL PRIVILEGES ON * . * TO 'YOUR_SYSTEM_USER'@'localhost';
+mysql&gt; UPDATE user SET plugin='auth_socket' WHERE User='YOUR_SYSTEM_USER';
+mysql&gt; FLUSH PRIVILEGES;
+mysql&gt; exit;
+
+$ service mysql restart
+</code></pre>
+<p>Remember that if you use option #2 you'll have to connect to mysql as your system username (mysql -u YOUR_SYSTEM_USER)</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows技巧汇总]]></title>
+        <id>https://mattwei.github.io/post/2017-07-27-windows-operate/</id>
+        <link href="https://mattwei.github.io/post/2017-07-27-windows-operate/">
+        </link>
+        <updated>2017-07-27T02:41:00.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>在CMD设置环境变量</li>
+</ul>
+<pre><code>set PATH=%PATH%;C:\workspace\software\go\bin
+</code></pre>
+<ul>
+<li>在powershell设置环境变量</li>
+</ul>
+<pre><code>$env:Path += &quot;;C:\workspace\software\go\bin&quot;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[std::mutex(C++11)]]></title>
+        <id>https://mattwei.github.io/post/2017-06-13-C++11-mutex/</id>
+        <link href="https://mattwei.github.io/post/2017-06-13-C++11-mutex/">
+        </link>
+        <updated>2017-06-13T02:01:00.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="http://www.cnblogs.com/haippy/p/3237213.html">原文</a></p>
+<h1 id="mutex-头文件介绍"><mutex> 头文件介绍</h1>
+<p>Mutex 系列类(四种)</p>
+<ol>
+<li>std::mutex，最基本的 Mutex 类。</li>
+<li>std::recursive_mutex，递归 Mutex 类。</li>
+<li>std::time_mutex，定时 Mutex 类。</li>
+<li>std::recursive_timed_mutex，定时递归 Mutex 类。</li>
+</ol>
+<p>Lock 类（两种）</p>
+<ol>
+<li>std::lock_guard，与 Mutex RAII 相关，方便线程对互斥量上锁。</li>
+<li>std::unique_lock，与 Mutex RAII 相关，方便线程对互斥量上锁，但提供了更好的上锁和解锁控制。</li>
+</ol>
+<p>其他类型</p>
+<ol>
+<li>std::once_flag</li>
+<li>std::adopt_lock_t</li>
+<li>std::defer_lock_t</li>
+<li>std::try_to_lock_t</li>
+</ol>
+<p>函数</p>
+<ol>
+<li>std::try_lock，尝试同时对多个互斥量上锁。</li>
+<li>std::lock，可以同时对多个互斥量上锁。</li>
+<li>std::call_once，如果多个线程需要同时调用某个函数，call_once 可以保证多个线程对该函数只调用一次。</li>
+</ol>
+<h1 id="stdmutex-介绍">std::mutex 介绍</h1>
+<p>std::mutex 是C++11 中最基本的互斥量，std::mutex 对象提供了独占所有权的特性——即不支持递归地对 std::mutex 对象上锁，而 std::recursive_lock 则可以递归地对互斥量对象上锁。</p>
+<h2 id="stdmutex-的成员函数">std::mutex 的成员函数</h2>
+<ol>
+<li>构造函数，std::mutex不允许拷贝构造，也不允许 move 拷贝，最初产生的 mutex 对象是处于 unlocked 状态的。</li>
+<li>lock()，调用线程将锁住该互斥量。线程调用该函数会发生下面 3 种情况：(1). 如果该互斥量当前没有被锁住，则调用线程将该互斥量锁住，直到调用 unlock之前，该线程一直拥有该锁。(2). 如果当前互斥量被其他线程锁住，则当前的调用线程被阻塞住。(3). 如果当前互斥量被当前调用线程锁住，则会产生死锁(deadlock)。</li>
+<li>unlock()， 解锁，释放对互斥量的所有权。</li>
+<li>try_lock()，尝试锁住互斥量，如果互斥量被其他线程占有，则当前线程也不会被阻塞。线程调用该函数也会出现下面 3 种情况，(1). 如果当前互斥量没有被其他线程占有，则该线程锁住互斥量，直到该线程调用 unlock 释放互斥量。(2). 如果当前互斥量被其他线程锁住，则当前调用线程返回 false，而并不会被阻塞掉。(3). 如果当前互斥量被当前调用线程锁住，则会产生死锁(deadlock)。</li>
+</ol>
+<pre><code>#include &lt;iostream&gt;       // std::cout
+#include &lt;thread&gt;         // std::thread
+#include &lt;mutex&gt;          // std::mutex
+
+volatile int counter(0); // non-atomic counter
+std::mutex mtx;           // locks access to counter
+
+void attempt_10k_increases() {
+    for (int i=0; i&lt;10000; ++i) {
+        if (mtx.try_lock()) {   // only increase if currently not locked:
+            ++counter;
+            mtx.unlock();
+        }
+    }
+}
+
+int main (int argc, const char* argv[]) {
+    std::thread threads[10];
+    for (int i=0; i&lt;10; ++i)
+        threads[i] = std::thread(attempt_10k_increases);
+
+    for (auto&amp; th : threads) th.join();
+    std::cout &lt;&lt; counter &lt;&lt; &quot; successful increases of the counter.\n&quot;;
+
+    return 0;
+}
+</code></pre>
+<h1 id="stdrecursive_mutex-介绍">std::recursive_mutex 介绍</h1>
+<p>std::recursive_mutex 与 std::mutex 一样，也是一种可以被上锁的对象，但是和 std::mutex 不同的是，std::recursive_mutex 允许同一个线程对互斥量多次上锁（即递归上锁），来获得对互斥量对象的多层所有权，std::recursive_mutex 释放互斥量时需要调用与该锁层次深度相同次数的 unlock()，可理解为 lock() 次数和 unlock() 次数相同，除此之外，std::recursive_mutex 的特性和 std::mutex 大致相同。</p>
+<h1 id="stdtime_mutex-介绍">std::time_mutex 介绍</h1>
+<p>std::time_mutex 比 std::mutex 多了两个成员函数，try_lock_for()，try_lock_until()。</p>
+<ol>
+<li>
+<p>try_lock_for 函数接受一个时间范围，表示在这一段时间范围之内线程如果没有获得锁则被阻塞住（与 std::mutex 的 try_lock() 不同，try_lock 如果被调用时没有获得锁则直接返回 false），如果在此期间其他线程释放了锁，则该线程可以获得对互斥量的锁，如果超时（即在指定时间内还是没有获得锁），则返回 false。</p>
+</li>
+<li>
+<p>try_lock_until 函数则接受一个时间点作为参数，在指定时间点未到来之前线程如果没有获得锁则被阻塞住，如果在此期间其他线程释放了锁，则该线程可以获得对互斥量的锁，如果超时（即在指定时间内还是没有获得锁），则返回 false。</p>
+</li>
+</ol>
+<pre><code>#include &lt;iostream&gt;       // std::cout
+#include &lt;chrono&gt;         // std::chrono::milliseconds
+#include &lt;thread&gt;         // std::thread
+#include &lt;mutex&gt;          // std::timed_mutex
+
+std::timed_mutex mtx;
+
+void fireworks() {
+  // waiting to get a lock: each thread prints &quot;-&quot; every 200ms:
+  while (!mtx.try_lock_for(std::chrono::milliseconds(200))) {
+    std::cout &lt;&lt; &quot;-&quot;;
+  }
+  // got a lock! - wait for 1s, then this thread prints &quot;*&quot;
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::cout &lt;&lt; &quot;*\n&quot;;
+  mtx.unlock();
+}
+
+int main ()
+{
+  std::thread threads[10];
+  // spawn 10 threads:
+  for (int i=0; i&lt;10; ++i)
+    threads[i] = std::thread(fireworks);
+
+  for (auto&amp; th : threads) th.join();
+
+  return 0;
+}
+</code></pre>
+<h1 id="stdrecursive_timed_mutex-介绍">std::recursive_timed_mutex 介绍</h1>
+<p>和 std:recursive_mutex 与 std::mutex 的关系一样，std::recursive_timed_mutex 的特性也可以从 std::timed_mutex 推导出来.</p>
+<h1 id="stdlock_guard-介绍">std::lock_guard 介绍</h1>
+<p>与 Mutex RAII 相关，方便线程对互斥量上锁。</p>
+<pre><code>#include &lt;iostream&gt;       // std::cout
+#include &lt;thread&gt;         // std::thread
+#include &lt;mutex&gt;          // std::mutex, std::lock_guard
+#include &lt;stdexcept&gt;      // std::logic_error
+
+std::mutex mtx;
+
+void print_even (int x) {
+    if (x%2==0) std::cout &lt;&lt; x &lt;&lt; &quot; is even\n&quot;;
+    else throw (std::logic_error(&quot;not even&quot;));
+}
+
+void print_thread_id (int id) {
+    try {
+        // using a local lock_guard to lock mtx guarantees unlocking on destruction / exception:
+        std::lock_guard&lt;std::mutex&gt; lck (mtx);
+        print_even(id);
+    }
+    catch (std::logic_error&amp;) {
+        std::cout &lt;&lt; &quot;[exception caught]\n&quot;;
+    }
+}
+
+int main ()
+{
+    std::thread threads[10];
+    // spawn 10 threads:
+    for (int i=0; i&lt;10; ++i)
+        threads[i] = std::thread(print_thread_id,i+1);
+
+    for (auto&amp; th : threads) th.join();
+
+    return 0;
+}
+</code></pre>
+<h1 id="stdunique_lock-介绍">std::unique_lock 介绍</h1>
+<p>与 Mutex RAII 相关，方便线程对互斥量上锁，但提供了更好的上锁和解锁控制。</p>
+<pre><code>
+#include &lt;iostream&gt;       // std::cout
+#include &lt;thread&gt;         // std::thread
+#include &lt;mutex&gt;          // std::mutex, std::unique_lock
+
+std::mutex mtx;           // mutex for critical section
+
+void print_block (int n, char c) {
+    // critical section (exclusive access to std::cout signaled by lifetime of lck):
+    std::unique_lock&lt;std::mutex&gt; lck (mtx);
+    for (int i=0; i&lt;n; ++i) {
+        std::cout &lt;&lt; c;
+    }
+    std::cout &lt;&lt; '\n';
+}
+
+int main ()
+{
+    std::thread th1 (print_block,50,'*');
+    std::thread th2 (print_block,50,'$');
+
+    th1.join();
+    th2.join();
+
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[nmake]]></title>
+        <id>https://mattwei.github.io/post/2017-03-28-libcurl/</id>
+        <link href="https://mattwei.github.io/post/2017-03-28-libcurl/">
+        </link>
+        <updated>2017-03-28T08:48:00.000Z</updated>
+        <content type="html"><![CDATA[<p>curl连接时如果报以下错误，需要添加Ws2_32.lib和Wldap32.lib。</p>
+<pre><code>1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_init referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_unbind_s referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_set_option referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_simple_bind_s referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_search_s referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_msgfree referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_err2string referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_first_entry referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_next_entry referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_first_attribute referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_next_attribute referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_get_values_len referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_value_free_len referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_get_dn referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ldap_memfree referenced in function __ldap_free_urldesc 
+1&gt;libcurl.lib(ldap.obj) : error LNK2019: unresolved external symbol __imp__ber_free referenced in function __ldap_free_urldesc
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[nmake]]></title>
+        <id>https://mattwei.github.io/post/2017-03-28-nmake/</id>
+        <link href="https://mattwei.github.io/post/2017-03-28-nmake/">
+        </link>
+        <updated>2017-03-28T02:41:00.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="command-line-tools">Command-line tools</h1>
+<p>To build a C/C++ project on the command line, you can use these Visual C++ command-line tools:</p>
+<ul>
+<li>CL<br>
+Use the compiler (cl.exe) to compile and link source code files into apps, libraries, and DLLs.</li>
+<li>Link<br>
+Use the linker (link.exe) to link compiled object files and libraries into apps and DLLs.</li>
+<li>MSBuild (Visual C++)<br>
+Use MSBuild (msbuild.exe) to build Visual C++ projects and Visual Studio solutions. This is equivalent to running the Build project or Build Solution command in the Visual Studio IDE.</li>
+<li>DEVENV<br>
+Use DEVENV (devenv.exe) combined with a command-line switch—for example, /Build or /Clean—to perform certain build commands without displaying the Visual Studio IDE.</li>
+<li>NMAKE<br>
+Use NMAKE (nmake.exe) to automate tasks that build Visual C++ projects by using a traditional makefile.</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Android test]]></title>
+        <id>https://mattwei.github.io/post/2017-02-17-android-test/</id>
+        <link href="https://mattwei.github.io/post/2017-02-17-android-test/">
+        </link>
+        <updated>2017-02-17T04:10:00.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="test">test</h2>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[std::async(C++11)]]></title>
+        <id>https://mattwei.github.io/post/2017-02-16-std-async/</id>
+        <link href="https://mattwei.github.io/post/2017-02-16-std-async/">
+        </link>
+        <updated>2017-02-16T08:23:00.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="stdfuture">std::future</h2>
+<p>std::future提供了一种访问异步操作结果的机制。我们可以以同步等待的方式来获取结果，可以通过查询future的状态（future_status）来获取异步操作的结果。future_status有三种状态：</p>
+<ul>
+<li>deferred：异步操作还没开始</li>
+<li>ready：异步操作已经完成</li>
+<li>timeout：异步操作超时</li>
+</ul>
+<pre><code>//查询future的状态
+std::future_status status;
+    do {
+        status = future.wait_for(std::chrono::seconds(1));
+        if (status == std::future_status::deferred) {
+            std::cout &lt;&lt; &quot;deferred\n&quot;;
+        } else if (status == std::future_status::timeout) {
+            std::cout &lt;&lt; &quot;timeout\n&quot;;
+        } else if (status == std::future_status::ready) {
+            std::cout &lt;&lt; &quot;ready!\n&quot;;
+        }
+    } while (status != std::future_status::ready);
+
+</code></pre>
+<p>获取future结果有三种方式：get、wait、wait_for，其中get等待异步操作结束并返回结果，wait只是等待异步操作完成，没有返回值，wait_for是超时等待返回结果</p>
+<h2 id="stdpromise">std::promise</h2>
+<p>std::promise为获取线程函数中的某个值提供便利，在线程函数中给外面传进来的promise赋值，当线程函数执行完成之后就可以通过promis获取该值了，值得注意的是取值是间接的通过promise内部提供的future来获取的。它的基本用法：</p>
+<pre><code>
+std::promise&lt;int&gt; pr;
+std::thread t([](std::promise&lt;int&gt;&amp; p) { p.set_value_at_thread_exit(9); },std::ref(pr));
+std::future&lt;int&gt; f = pr.get_future();
+auto r = f.get();
+
+</code></pre>
+<h2 id="stdpackaged_task">std::packaged_task</h2>
+<p>std::packaged_task它包装了一个可调用的目标（如function, lambda expression, bind expression, or another function object）,以便异步调用，它和promise在某种程度上有点像，promise保存了一个共享状态的值，而packaged_task保存的是一个函数。它的基本用法：</p>
+<pre><code>    std::packaged_task&lt;int()&gt; task([](){ return 7; });
+    std::thread t1(std::ref(task));
+    std::future&lt;int&gt; f1 = task.get_future();
+    auto r1 = f1.get();
+</code></pre>
+<h2 id="stdasync">std::async</h2>
+<p>std::async的原型async(std::launch::async | std::launch::deferred, f, args...)</p>
+<p>第一个参数是线程的创建策略，有两种策略，默认的策略是立即创建线程：</p>
+<ul>
+<li>std::launch::async：在调用async就开始创建线程。</li>
+<li>std::launch::deferred：延迟加载方式创建线程。调用async时不创建线程，直到调用了future的get或者wait时才创建线程。</li>
+</ul>
+<p>第二个参数是线程函数，第三个参数是线程函数的参数。</p>
+<h2 id="stdasync基本用法">std::async基本用法：</h2>
+<pre><code>std::future&lt;int&gt; f1 = std::async(std::launch::async, [](){
+        return 8;
+    });
+
+cout&lt;&lt;f1.get()&lt;&lt;endl; //output: 8
+
+std::future&lt;int&gt; f2 = std::async(std::launch::async, [](){
+        cout&lt;&lt;8&lt;&lt;endl;
+    });
+
+f2.wait(); //output: 8
+
+std::future&lt;int&gt; future = std::async(std::launch::async, [](){
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        return 8;
+    });
+
+    std::cout &lt;&lt; &quot;waiting...\n&quot;;
+    std::future_status status;
+    do {
+        status = future.wait_for(std::chrono::seconds(1));
+        if (status == std::future_status::deferred) {
+            std::cout &lt;&lt; &quot;deferred\n&quot;;
+        } else if (status == std::future_status::timeout) {
+            std::cout &lt;&lt; &quot;timeout\n&quot;;
+        } else if (status == std::future_status::ready) {
+            std::cout &lt;&lt; &quot;ready!\n&quot;;
+        }
+    } while (status != std::future_status::ready);
+
+    std::cout &lt;&lt; &quot;result is &quot; &lt;&lt; future.get() &lt;&lt; '\n';
+</code></pre>
+<p>可能的结果：</p>
+<pre><code>waiting...
+timeout
+timeout
+ready!
+result is 8
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[C++泛型]]></title>
+        <id>https://mattwei.github.io/post/2017-02-16-C++泛型/</id>
+        <link href="https://mattwei.github.io/post/2017-02-16-C++泛型/">
+        </link>
+        <updated>2017-02-16T07:39:00.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="泛型方法">泛型方法</h1>
+<pre><code>template &lt;typename T&gt;
+int compare(const T &amp;v1, const T &amp;v2)
+{
+   if (v1 &lt; v2) return -1;
+   if (v2 &lt; v1) return 1;
+   return 0;
+}
+</code></pre>
+<p>a. 模板定义以关键字 template 开始，后接模板形参表，模板形参表是用尖括号括住的一个或多个模板形参的列表，形参之间以逗号分隔。 模板形参表不能为空。</p>
+<p>b. 模板形参表很像函数形参表，函数形参表定义了特定类型的局部变量但并不初始化那些变量，在运行时再提供实参来初始化形参。</p>
+<p>c. 模板形参可以是表示类型的类型形参，也可以是表示常量表达式的非类型形参。非类型形参跟在类型说明符之后声明, 类型形参跟在关键字 class 或 typename 之后定义，例如，class T 是名为 T 的类型形参，在这里 class 和 typename 没有区别。</p>
+<p>使用函数模板时，编译器会推断哪个（或哪些）模板实参绑定到模板形参。一旦编译器确定了实际的模板实参，就称它实例化了函数模板的一个实例。实质上，编译器将确定用什么类型代替每个类型形参，以及用什么值代替每个非类型形参。推导出实际模板实参后，编译器使用实参代替相应的模板形参产生编译该版本的函数。编译器承担了为我们使用的每种类型而编写函数的单调工作。</p>
+<h1 id="泛型类">泛型类</h1>
+<pre><code>template &lt;class T1, class T2 &gt;
+class A {
+private:
+  int a;
+  T1 b; //成员变量也可以用模板参数
+public:
+  int fun1(T1 x, int y );
+  T2 fun2(T1 x, T2 y);
+}
+//类实现部分
+template &lt;class T1, class T2 &gt;
+int A&lt;T1&gt;:: fun1(T1 x, int y )
+{
+  //实现……
+}
+
+template &lt;class T1, class T2 &gt;
+T2 A&lt;T1,T2&gt;:: fun2(T1 x, T2 y)
+{
+  //实现……
+}
+
+//使用类A
+int main( ) {
+//定义对象a,并用int替换T1, float替换T2
+A&lt;int, float&gt; a;
+//实例化a,调用a的属性和方法……
+}
+</code></pre>
+<p>类模板:类模板也是模板，因此必须以关键字 template 开头，后接模板形参表。</p>
+<p>a. 除了模板形参表外，类模板的定义看起来与任意其他类问相似。类模板可以定义数据成员、函数成员和类型成员，也可以使用访问标号控制对成员的访问，还可以定义构造函数和析构函数等等。在类和类成员的定义中，可以使用模板形参作为类型或值的占位符，在使用类时再提供那些类型或值。</p>
+<p>b. 与调用函数模板形成对比，使用类模板时，必须为模板形参显式指定实参.编译器使用实参来实例化这个类的特定类型版本。</p>
 ]]></content>
     </entry>
 </feed>

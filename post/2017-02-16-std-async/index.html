@@ -1,0 +1,268 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>std::async(C++11) | Minji&#39;s thinkings</title>
+<link rel="shortcut icon" href="https://mattwei.github.io/favicon.ico?v=1631583617311">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://mattwei.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="std::async(C++11) | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="std::future
+std::future提供了一种访问异步操作结果的机制。我们可以以同步等待的方式来获取结果，可以通过查询future的状态（future_status）来获取异步操作的结果。future_status有三种状态：
+
+..." />
+    <meta name="keywords" content="C++" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://mattwei.github.io">
+  <img class="avatar" src="https://mattwei.github.io/images/avatar.png?v=1631583617311" alt="">
+  </a>
+  <h1 class="site-title">
+    Minji&#39;s thinkings
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              std::async(C++11)
+            </h2>
+            <div class="post-info">
+              <span>
+                2017-02-16
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://mattwei.github.io/tag/IZctYlJ5G2/" class="post-tag">
+                  # C++
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="stdfuture">std::future</h2>
+<p>std::future提供了一种访问异步操作结果的机制。我们可以以同步等待的方式来获取结果，可以通过查询future的状态（future_status）来获取异步操作的结果。future_status有三种状态：</p>
+<ul>
+<li>deferred：异步操作还没开始</li>
+<li>ready：异步操作已经完成</li>
+<li>timeout：异步操作超时</li>
+</ul>
+<pre><code>//查询future的状态
+std::future_status status;
+    do {
+        status = future.wait_for(std::chrono::seconds(1));
+        if (status == std::future_status::deferred) {
+            std::cout &lt;&lt; &quot;deferred\n&quot;;
+        } else if (status == std::future_status::timeout) {
+            std::cout &lt;&lt; &quot;timeout\n&quot;;
+        } else if (status == std::future_status::ready) {
+            std::cout &lt;&lt; &quot;ready!\n&quot;;
+        }
+    } while (status != std::future_status::ready);
+
+</code></pre>
+<p>获取future结果有三种方式：get、wait、wait_for，其中get等待异步操作结束并返回结果，wait只是等待异步操作完成，没有返回值，wait_for是超时等待返回结果</p>
+<h2 id="stdpromise">std::promise</h2>
+<p>std::promise为获取线程函数中的某个值提供便利，在线程函数中给外面传进来的promise赋值，当线程函数执行完成之后就可以通过promis获取该值了，值得注意的是取值是间接的通过promise内部提供的future来获取的。它的基本用法：</p>
+<pre><code>
+std::promise&lt;int&gt; pr;
+std::thread t([](std::promise&lt;int&gt;&amp; p) { p.set_value_at_thread_exit(9); },std::ref(pr));
+std::future&lt;int&gt; f = pr.get_future();
+auto r = f.get();
+
+</code></pre>
+<h2 id="stdpackaged_task">std::packaged_task</h2>
+<p>std::packaged_task它包装了一个可调用的目标（如function, lambda expression, bind expression, or another function object）,以便异步调用，它和promise在某种程度上有点像，promise保存了一个共享状态的值，而packaged_task保存的是一个函数。它的基本用法：</p>
+<pre><code>    std::packaged_task&lt;int()&gt; task([](){ return 7; });
+    std::thread t1(std::ref(task));
+    std::future&lt;int&gt; f1 = task.get_future();
+    auto r1 = f1.get();
+</code></pre>
+<h2 id="stdasync">std::async</h2>
+<p>std::async的原型async(std::launch::async | std::launch::deferred, f, args...)</p>
+<p>第一个参数是线程的创建策略，有两种策略，默认的策略是立即创建线程：</p>
+<ul>
+<li>std::launch::async：在调用async就开始创建线程。</li>
+<li>std::launch::deferred：延迟加载方式创建线程。调用async时不创建线程，直到调用了future的get或者wait时才创建线程。</li>
+</ul>
+<p>第二个参数是线程函数，第三个参数是线程函数的参数。</p>
+<h2 id="stdasync基本用法">std::async基本用法：</h2>
+<pre><code>std::future&lt;int&gt; f1 = std::async(std::launch::async, [](){
+        return 8;
+    });
+
+cout&lt;&lt;f1.get()&lt;&lt;endl; //output: 8
+
+std::future&lt;int&gt; f2 = std::async(std::launch::async, [](){
+        cout&lt;&lt;8&lt;&lt;endl;
+    });
+
+f2.wait(); //output: 8
+
+std::future&lt;int&gt; future = std::async(std::launch::async, [](){
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        return 8;
+    });
+
+    std::cout &lt;&lt; &quot;waiting...\n&quot;;
+    std::future_status status;
+    do {
+        status = future.wait_for(std::chrono::seconds(1));
+        if (status == std::future_status::deferred) {
+            std::cout &lt;&lt; &quot;deferred\n&quot;;
+        } else if (status == std::future_status::timeout) {
+            std::cout &lt;&lt; &quot;timeout\n&quot;;
+        } else if (status == std::future_status::ready) {
+            std::cout &lt;&lt; &quot;ready!\n&quot;;
+        }
+    } while (status != std::future_status::ready);
+
+    std::cout &lt;&lt; &quot;result is &quot; &lt;&lt; future.get() &lt;&lt; '\n';
+</code></pre>
+<p>可能的结果：</p>
+<pre><code>waiting...
+timeout
+timeout
+ready!
+result is 8
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#stdfuture">std::future</a></li>
+<li><a href="#stdpromise">std::promise</a></li>
+<li><a href="#stdpackaged_task">std::packaged_task</a></li>
+<li><a href="#stdasync">std::async</a></li>
+<li><a href="#stdasync%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95">std::async基本用法：</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mattwei.github.io/post/2017-02-16-C++泛型/">
+              <h3 class="post-title">
+                C++泛型
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://mattwei.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

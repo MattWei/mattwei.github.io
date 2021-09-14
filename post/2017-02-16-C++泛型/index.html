@@ -2,24 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Minji&#39;s thinkings</title>
+<title>C++泛型 | Minji&#39;s thinkings</title>
 <link rel="shortcut icon" href="https://mattwei.github.io/favicon.ico?v=1631583617311">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://mattwei.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="C++泛型 | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
-
-🏠 关于本站
-👨‍💻 博主是谁
-⛹ 兴趣爱好
-📬 联系我呀
-..." />
-    <meta name="keywords" content="" />
+    <meta name="description" content="泛型方法
+template &lt;typename T&gt;
+int compare(const T &amp;v1, const T &amp;v2)
+{
+   if (v1 &lt; v2) return -1;
+   if (v2..." />
+    <meta name="keywords" content="C++" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,39 +79,76 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              C++泛型
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2017-02-16
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
+              
+                <a href="https://mattwei.github.io/tag/IZctYlJ5G2/" class="post-tag">
+                  # C++
+                </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <h1 id="泛型方法">泛型方法</h1>
+<pre><code>template &lt;typename T&gt;
+int compare(const T &amp;v1, const T &amp;v2)
+{
+   if (v1 &lt; v2) return -1;
+   if (v2 &lt; v1) return 1;
+   return 0;
+}
+</code></pre>
+<p>a. 模板定义以关键字 template 开始，后接模板形参表，模板形参表是用尖括号括住的一个或多个模板形参的列表，形参之间以逗号分隔。 模板形参表不能为空。</p>
+<p>b. 模板形参表很像函数形参表，函数形参表定义了特定类型的局部变量但并不初始化那些变量，在运行时再提供实参来初始化形参。</p>
+<p>c. 模板形参可以是表示类型的类型形参，也可以是表示常量表达式的非类型形参。非类型形参跟在类型说明符之后声明, 类型形参跟在关键字 class 或 typename 之后定义，例如，class T 是名为 T 的类型形参，在这里 class 和 typename 没有区别。</p>
+<p>使用函数模板时，编译器会推断哪个（或哪些）模板实参绑定到模板形参。一旦编译器确定了实际的模板实参，就称它实例化了函数模板的一个实例。实质上，编译器将确定用什么类型代替每个类型形参，以及用什么值代替每个非类型形参。推导出实际模板实参后，编译器使用实参代替相应的模板形参产生编译该版本的函数。编译器承担了为我们使用的每种类型而编写函数的单调工作。</p>
+<h1 id="泛型类">泛型类</h1>
+<pre><code>template &lt;class T1, class T2 &gt;
+class A {
+private:
+  int a;
+  T1 b; //成员变量也可以用模板参数
+public:
+  int fun1(T1 x, int y );
+  T2 fun2(T1 x, T2 y);
+}
+//类实现部分
+template &lt;class T1, class T2 &gt;
+int A&lt;T1&gt;:: fun1(T1 x, int y )
+{
+  //实现……
+}
+
+template &lt;class T1, class T2 &gt;
+T2 A&lt;T1,T2&gt;:: fun2(T1 x, T2 y)
+{
+  //实现……
+}
+
+//使用类A
+int main( ) {
+//定义对象a,并用int替换T1, float替换T2
+A&lt;int, float&gt; a;
+//实例化a,调用a的属性和方法……
+}
+</code></pre>
+<p>类模板:类模板也是模板，因此必须以关键字 template 开头，后接模板形参表。</p>
+<p>a. 除了模板形参表外，类模板的定义看起来与任意其他类问相似。类模板可以定义数据成员、函数成员和类型成员，也可以使用访问标号控制对成员的访问，还可以定义构造函数和析构函数等等。在类和类成员的定义中，可以使用模板形参作为类型或值的占位符，在使用类时再提供那些类型或值。</p>
+<p>b. 与调用函数模板形成对比，使用类模板时，必须为模板形参显式指定实参.编译器使用实参来实例化这个类的特定类型版本。</p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
+<li><a href="#%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95">泛型方法</a></li>
+<li><a href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB">泛型类</a></li>
 </ul>
 
               </div>

@@ -2,24 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Minji&#39;s thinkings</title>
+<title>Visual Studio Code cmake | Minji&#39;s thinkings</title>
 <link rel="shortcut icon" href="https://mattwei.github.io/favicon.ico?v=1631583617311">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://mattwei.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Visual Studio Code cmake | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
+    <meta name="description" content="CMakelists.txt
+cmake_minimum_required(VERSION 3.7)
 
-🏠 关于本站
-👨‍💻 博主是谁
-⛹ 兴趣爱好
-📬 联系我呀
-..." />
-    <meta name="keywords" content="" />
+project(ATSUnitTest CXX)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE..." />
+    <meta name="keywords" content="cmake,VisualStudioCode" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,39 +79,81 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              Visual Studio Code cmake
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2021-09-06
               </span>
               <span>
                 1 min read
               </span>
               
+                <a href="https://mattwei.github.io/tag/m66UfiRaP7/" class="post-tag">
+                  # cmake
+                </a>
+              
+                <a href="https://mattwei.github.io/tag/I8pxm5vIR8/" class="post-tag">
+                  # VisualStudioCode
+                </a>
+              
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <h1 id="cmakeliststxt">CMakelists.txt</h1>
+<pre><code>cmake_minimum_required(VERSION 3.7)
+
+project(ATSUnitTest CXX)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}) 
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\gmock\\include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\winInterface)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\..\\ATS2PA\\src)
+
+LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}\\..\\..\\gmock)
+
+# MFC
+add_definitions(-D_AFXDLL)
+# 1 为静态链接，2为动态链接
+set(CMAKE_MFC_FLAG 2)
+# force Unicode over Multi-byte
+#if(COMPILER_MSVC)
+add_definitions(-DUNICODE -D_UNICODE)
+set(CMAKE_C_FLAGS_DEBUG &quot;${CMAKE_C_FLAGS_DEBUG} /W3 /MTd&quot;)
+set(CMAKE_CXX_FLAGS_RELEASE &quot;${CMAKE_CXX_FLAGS_RELEASE} /MT&quot;)
+set(CMAKE_CXX_FLAGS_DEBUG &quot;${CMAKE_CXX_FLAGS_DEBUG} /MTd&quot;)
+#endif()
+
+set(LIBNAME &quot;gmock.lib&quot;)
+set(ATS_SRC_DIR &quot;../../../ATS2PA/src/&quot;)
+
+add_definitions(-DCOMPILE_UNIT_TESTS)
+
+add_executable(ATSUnitTest ../../main.cpp
+    taskunittest.cpp
+    ${ATS_SRC_DIR}/ats/ats.cpp
+    ${ATS_SRC_DIR}/ats/task.cpp
+    ${ATS_SRC_DIR}/ats/atspackage.cc
+    ${ATS_SRC_DIR}/utils/crc.cc
+    ${ATS_SRC_DIR}/utils/timer.cpp)
+
+target_link_libraries(ATSUnitTest debug gmock.lib)
+
+</code></pre>
+<h1 id="run-command">Run command</h1>
+<pre><code>mkdir build
+cd build
+cmake ..
+cd ..
+cmake --build build --target ALL_BUILD
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
+<li><a href="#cmakeliststxt">CMakelists.txt</a></li>
+<li><a href="#run-command">Run command</a></li>
 </ul>
 
               </div>
@@ -121,6 +161,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mattwei.github.io/post/2017-05-20-debian-mysql-setup/">
+              <h3 class="post-title">
+                Debian mysql setup
+              </h3>
+            </a>
+          </div>
         
 
         

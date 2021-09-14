@@ -2,24 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Minji&#39;s thinkings</title>
+<title>Debian mysql setup | Minji&#39;s thinkings</title>
 <link rel="shortcut icon" href="https://mattwei.github.io/favicon.ico?v=1631583617311">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://mattwei.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Debian mysql setup | Minji&#39;s thinkings - Atom Feed" href="https://mattwei.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
-
-🏠 关于本站
-👨‍💻 博主是谁
-⛹ 兴趣爱好
-📬 联系我呀
-..." />
-    <meta name="keywords" content="" />
+    <meta name="description" content="ERROR 1698 (28000): Access denied for user 'root'@'localhost'解决方法
+The reason is that recent Ubuntu installation (maybe o..." />
+    <meta name="keywords" content="Mysql,Debian" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,39 +75,78 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              Debian mysql setup
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2021-09-06
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
+              
+                <a href="https://mattwei.github.io/tag/q8UTdj--2/" class="post-tag">
+                  # Mysql
+                </a>
+              
+                <a href="https://mattwei.github.io/tag/HA7TovkMCk/" class="post-tag">
+                  # Debian
+                </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <h1 id="error-1698-28000-access-denied-for-user-rootlocalhost解决方法">ERROR 1698 (28000): Access denied for user 'root'@'localhost'解决方法</h1>
+<p>The reason is that recent Ubuntu installation (maybe others also), mysql is using by default the UNIX auth_socket plugin.</p>
+<p>Basically means that: db_users using it, will be &quot;auth&quot; by the system user credentias. You can see if your root user is set up like this by doing the following:</p>
+<pre><code>$ sudo mysql -u root # I had to use &quot;sudo&quot; since is new installation
+
+mysql&gt; USE mysql;
+mysql&gt; SELECT User, Host, plugin FROM mysql.user;
+
++------------------+-----------------------+
+| User             | plugin                |
++------------------+-----------------------+
+| root             | unix_socket           |
+| mysql.sys        | mysql_native_password |
+| debian-sys-maint | mysql_native_password |
++------------------+-----------------------+
+</code></pre>
+<p>As you can see in the query, the root user is using the auth_socket plugin</p>
+<p>There are 2 ways to solve this:</p>
+<ol>
+<li>You can set the root user to use the mysql_native_password plugin</li>
+<li>You can create a new db_user with you system_user (recommended)</li>
+</ol>
+<p>Option 1:</p>
+<pre><code>$ sudo mysql -u root # I had to use &quot;sudo&quot; since is new installation
+
+mysql&gt; USE mysql;
+mysql&gt; UPDATE user SET plugin='mysql_native_password' WHERE User='root';
+mysql&gt; FLUSH PRIVILEGES;
+mysql&gt; exit;
+
+$ service mysql restart
+</code></pre>
+<p>Option 2: (replace YOUR_SYSTEM_USER with the username you have)</p>
+<pre><code>$ sudo mysql -u root # I had to use &quot;sudo&quot; since is new installation
+
+mysql&gt; USE mysql;
+mysql&gt; CREATE USER 'YOUR_SYSTEM_USER'@'localhost' IDENTIFIED BY '';
+mysql&gt; GRANT ALL PRIVILEGES ON * . * TO 'YOUR_SYSTEM_USER'@'localhost';
+mysql&gt; UPDATE user SET plugin='auth_socket' WHERE User='YOUR_SYSTEM_USER';
+mysql&gt; FLUSH PRIVILEGES;
+mysql&gt; exit;
+
+$ service mysql restart
+</code></pre>
+<p>Remember that if you use option #2 you'll have to connect to mysql as your system username (mysql -u YOUR_SYSTEM_USER)</p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
+<li><a href="#error-1698-28000-access-denied-for-user-rootlocalhost%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">ERROR 1698 (28000): Access denied for user 'root'@'localhost'解决方法</a></li>
 </ul>
 
               </div>
@@ -121,6 +154,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mattwei.github.io/post/2017-07-27-windows-operate/">
+              <h3 class="post-title">
+                Windows技巧汇总
+              </h3>
+            </a>
+          </div>
         
 
         
